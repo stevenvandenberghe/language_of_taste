@@ -1,3 +1,6 @@
+# function to remove funky apostrophes and replace them
+# with single quotes
+
 import glob
 
 
