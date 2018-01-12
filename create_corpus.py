@@ -3,13 +3,15 @@ from collections import defaultdict, OrderedDict
 from nltk.corpus.reader.plaintext import PlaintextCorpusReader
 from nltk.tokenize import RegexpTokenizer
 import nltk.data
+from string import punctuation
 
 c6070_dir = 'testcorpus/6070/'
 c8090_dir = 'testcorpus/8090/'
 c6070_wordcount = defaultdict(int)
 c8090_wordcount = defaultdict(int)
-word_tokenize = RegexpTokenizer('\w+(?:-\w+)*')
+word_tokenize = RegexpTokenizer('\w+(?:-\w+)*(?:[?!.,:])*')
 sent_tokenize = nltk.data.load('tokenizers/punkt/french.pickle')
+translation = str.maketrans("","", ",.?!:")
 
 # ([A-Z]\.)+\w+(-\w+)*\$?\d+(\.\d+)?%?\.\.\.[][.,;"\'?():-_`]
 
@@ -20,7 +22,7 @@ c8090 = PlaintextCorpusReader(c8090_dir, '.*', encoding="iso-8859-1", word_token
 
 for file in c6070.fileids():
     for word in c6070.words(file):
-        word = word.lower()
+        word = word.lower().translate(translation)
         if word[0].isalpha():
             c6070_wordcount[word] += 1
             counter += 1
@@ -30,7 +32,7 @@ print(f'C6070 has {counter} tokens and {len(c6070_wordcount)} types')
 counter = 0
 for file in c8090.fileids():
     for word in c8090.words(file):
-        word = word.lower()
+        word = word.lower().translate(translation)
         if word[0].isalpha():
             c8090_wordcount[word] += 1
             counter += 1
