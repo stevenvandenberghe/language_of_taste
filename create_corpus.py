@@ -1,15 +1,22 @@
 import csv
 from collections import defaultdict, OrderedDict
 from nltk.corpus.reader.plaintext import PlaintextCorpusReader
+from nltk.tokenize import RegexpTokenizer
+import nltk.data
 
 c6070_dir = 'testcorpus/6070/'
 c8090_dir = 'testcorpus/8090/'
 c6070_wordcount = defaultdict(int)
 c8090_wordcount = defaultdict(int)
+word_tokenize = RegexpTokenizer('\w+(?:-\w+)*')
+sent_tokenize = nltk.data.load('tokenizers/punkt/french.pickle')
+
+# ([A-Z]\.)+\w+(-\w+)*\$?\d+(\.\d+)?%?\.\.\.[][.,;"\'?():-_`]
+
 counter = 0
 
-c6070 = PlaintextCorpusReader(c6070_dir, '.*', encoding="iso-8859-1")
-c8090 = PlaintextCorpusReader(c8090_dir, '.*', encoding="iso-8859-1")
+c6070 = PlaintextCorpusReader(c6070_dir, '.*', encoding="iso-8859-1", word_tokenizer=word_tokenize, sent_tokenizer=sent_tokenize)
+c8090 = PlaintextCorpusReader(c8090_dir, '.*', encoding="iso-8859-1", word_tokenizer=word_tokenize, sent_tokenizer=sent_tokenize)
 
 for file in c6070.fileids():
     for word in c6070.words(file):
