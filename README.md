@@ -8,3 +8,4 @@ The directory "corpora" holds the source texts, divided in two folders: C6070 ho
 
 URL to Notebook Chapter 2
 https://mybinder.org/v2/gh/stevenvandenberghe/language_of_taste/master?filepath=2_Theory_Method.ipynb
+
